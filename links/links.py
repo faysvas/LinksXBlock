@@ -11,7 +11,6 @@ class LinksXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
-
     # Fields are defined on the class.  You can access them in your code as
     href1=String(help="First Url",default=None, scope=Scope.content)
     href2=String(help="Second Url", default=None, scope=Scope.content)
@@ -27,10 +26,8 @@ class LinksXBlock(XBlock):
 
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
-        """
-        The primary view of the LinksXBlock, shown to students
-        when viewing courses.
-        """
+        """The primary view of the LinksXBlock, shown to students
+        when viewing courses."""
         html = self.resource_string("static/html/links.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/links.css"))
@@ -42,16 +39,16 @@ class LinksXBlock(XBlock):
     # than one handler, or you may not need any handlers at all.
     def studio_view(self, context=None):
 	html = self.resource_string("static/html/links_edit.html")
-	href1 = self.href1 or "
-	href2 = self.href2 or "
-	href3 = self.href3 or "
+	href1 = self.href1 or ''
+	href2 = self.href2 or ''
+	href3 = self.href3 or ''
 	frag = Fragment(html.format(href1=href1,href2=href2,href3=href3,self=self))
-	frag.add javascript(self.resource_string("static/js/src/links_edit.js"))
-	frag initialize js("LinksEditXBlock")
+	frag.add_javascript(self.resource_string("static/js/src/links_edit.js"))
+	frag.initialize_js('LinksEditXBlock')
 	return frag
 	
-@XBlock.json_handler
-	def studio_submit(self,data,suffix="):
+	@XBlock.json_handler
+	def studio_submit(self,data,suffix=''):
 		self.href1=data['href1']
 		self.href2=data['href2']
 		self.href3=data['href3']
